@@ -11,6 +11,7 @@ def get_etfs():
     data = res.json().get('result').get('etfItemList')
     return pd.DataFrame(data)
 
+@st.cache_data(ttl='1m')
 def get_prices(symbol):
     URL = 'https://api.finance.naver.com/siseJson.naver'
     params = {
