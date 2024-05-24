@@ -40,5 +40,5 @@ handler = lambda x: '🤗' if x >= top3 else '🫠' if x < 0 else '🫥'
 df['signal'] = df['score'].apply(handler)
 
 st.set_page_config(page_title='Strategy Monitoring (ISA)', page_icon='📈')
-st.title('ETF Score')
+st.title('Strategy Monitoring (ISA)')
 st.dataframe(df)
