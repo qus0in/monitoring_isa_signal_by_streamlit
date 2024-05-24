@@ -3,6 +3,8 @@ import pandas as pd
 from ast import literal_eval
 import streamlit as st
 
+st.set_page_config(page_title='Strategy Monitoring (ISA)', page_icon='📈')
+
 def get_etfs():
     URL = 'https://finance.naver.com/api/sise/etfItemList.nhn'
     params = {'etfType': 0}
@@ -26,8 +28,8 @@ def get_prices(symbol):
     return pd.DataFrame(data[1:], columns=data[0])
 
 def get_score(prices):
-    # periods = [3, 5, 8, 13, 21, 34, 55]
-    periods = [5, 10, 20, 60, 120]
+    periods = [3, 5, 8, 13, 21, 34, 55]
+    # periods = [5, 10, 20, 60, 120]
 
     handler = lambda x: x.iloc[-1] / x.iloc[0] - 1
     scores = [handler(prices.종가.tail(p)) for p in periods]
@@ -42,6 +44,5 @@ top3 = df.iloc[2]['score']
 handler = lambda x: '🤗' if x >= top3 else '🫠' if x < 0 else '🫥'
 df['signal'] = df['score'].apply(handler)
 
-st.set_page_config(page_title='Strategy Monitoring (ISA)', page_icon='📈')
 st.title('Strategy Monitoring (ISA)')
 st.dataframe(df)
