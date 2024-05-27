@@ -35,7 +35,7 @@ def get_score(prices):
     scores = [handler(prices.종가.tail(p)) for p in periods]
     return sum(scores) / len(periods) * 252
 
-symbols = ['360750', '133690', '381180', '114800',
+symbols = ['379800', '379810', '381180', '114800',
            '251340', '132030', '261240', '400570']
 df = get_etfs().set_index('itemcode').loc[symbols, ['itemname']]
 df['score'] = [get_score(get_prices(idx)) for idx in df.index]
