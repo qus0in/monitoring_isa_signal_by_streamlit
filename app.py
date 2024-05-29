@@ -28,15 +28,16 @@ def get_prices(symbol):
     return pd.DataFrame(data[1:], columns=data[0])
 
 def get_score(prices):
-    periods = [3, 5, 8, 13, 21, 34, 55]
+    # periods = [3, 5, 8, 13, 21, 34, 55]
+    periods = [3, 5, 8, 13, 21]
     # periods = [5, 10, 20, 60, 120]
 
     handler = lambda x: x.iloc[-1] / x.iloc[0] - 1
     scores = [handler(prices.종가.tail(p)) for p in periods]
     return sum(scores) / len(periods) * 252
 
-symbols = ['379800', '379810', '381180', '114800',
-           '251340', '132030', '261240', '400570']
+symbols = ['379800', '379810', '381180', '114800', '069500',
+           '251340', '132030', '261240', '400570', '229200']
 df = get_etfs().set_index('itemcode').loc[symbols, ['itemname']]
 df['score'] = [get_score(get_prices(idx)) for idx in df.index]
 df.sort_values(by='score', ascending=False, inplace=True)
